@@ -1,6 +1,6 @@
 #include "Bullet.h"
 #include "Chowmein_Conga.h"
-
+#include "Locust.h"
 #include "Collision.h"
 
 Bullet::Bullet(float x, float y) : CGameObject(x, y)
@@ -28,6 +28,8 @@ void Bullet::OnCollisionWith(LPCOLLISIONEVENT e)
 	isDeleted = true; 
 	if (dynamic_cast<Chowmein_Conga*>(e->obj))
 		OnCollisionWithChowmeinConga(e);
+	if (dynamic_cast<CLocust*>(e->obj))
+		OnCollisionWithChowmeinConga(e);
 }
 
 void Bullet::OnCollisionWithChowmeinConga(LPCOLLISIONEVENT e)
@@ -36,6 +38,15 @@ void Bullet::OnCollisionWithChowmeinConga(LPCOLLISIONEVENT e)
 	if (chowmein->GetState() != CHOWMEIN_CONGA_STATE_DIE)
 	{
 		chowmein->SetState(CHOWMEIN_CONGA_STATE_DIE);
+	}
+}
+
+void Bullet::OnCollisionWithLocust(LPCOLLISIONEVENT e)
+{
+	CLocust* locust = dynamic_cast<CLocust*>(e->obj);
+	if (locust->GetState() != LOCUST_STATE_DIE)
+	{
+		locust->SetState(LOCUST_STATE_DIE);
 	}
 }
 

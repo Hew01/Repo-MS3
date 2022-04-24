@@ -24,6 +24,7 @@ protected:
 
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e); 
 	void OnCollisionWithChowmeinConga(LPCOLLISIONEVENT e);
+	void OnCollisionWithLocust(LPCOLLISIONEVENT e);
 
 public:
 	Bullet(float x, float y);

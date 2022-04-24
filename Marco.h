@@ -80,6 +80,7 @@ class CMARCO : public CGameObject
 	bool killing;
 
 	void OnCollisionWithChowmeinConga(LPCOLLISIONEVENT e);
+	void OnCollisionWithLocust(LPCOLLISIONEVENT e);
 	//void OnCollisionWithCoin(LPCOLLISIONEVENT e);
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
 

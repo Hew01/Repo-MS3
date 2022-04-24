@@ -7,6 +7,7 @@
 #include "Portal.h"
 #include "Bullet.h"
 #include "PlayScene.h"
+#include "Locust.h"
 
 #include "Collision.h"
 
@@ -50,6 +51,8 @@ void CMARCO::OnCollisionWith(LPCOLLISIONEVENT e)
 
 	if (dynamic_cast<Chowmein_Conga*>(e->obj))
 		OnCollisionWithChowmeinConga(e);
+	if (dynamic_cast<CLocust*>(e->obj))
+		OnCollisionWithLocust(e);
 	//else if (dynamic_cast<CCoin*>(e->obj))
 	//	OnCollisionWithCoin(e);
 	else if (dynamic_cast<Portal*>(e->obj))
@@ -58,7 +61,7 @@ void CMARCO::OnCollisionWith(LPCOLLISIONEVENT e)
 	DebugOut(L"y = %f\n", y);
 }
 
-void CMARCO::OnCollisionWithChowmeinConga(LPCOLLISIONEVENT e)
+void CMARCO::OnCollisionWithLocust(LPCOLLISIONEVENT e)
 {
 	Chowmein_Conga* chowmein = dynamic_cast<Chowmein_Conga*>(e->obj);
 
@@ -78,6 +81,9 @@ void CMARCO::OnCollisionWithChowmeinConga(LPCOLLISIONEVENT e)
 				chowmein->SetState(CHOWMEIN_CONGA_STATE_DIE);
 		}*/
 	}
+}
+void CMARCO::OnCollisionWithChowmeinConga(LPCOLLISIONEVENT e) {
+
 }
 //
 //void CMARCO::OnCollisionWithCoin(LPCOLLISIONEVENT e)
