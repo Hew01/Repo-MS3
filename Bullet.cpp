@@ -3,10 +3,11 @@
 
 #include "Collision.h"
 
-Bullet::Bullet(float x, float y) : CGameObject(x, y)
+Bullet::Bullet(float x, float y, float dir) : CGameObject(x, y)
 {
-	this->ax = BULLET_SPEED;
+	this->ax = 0;
 	this->ay = 0;
+	this->vx = BULLET_SPEED*dir;
 }
 
 void Bullet::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -26,8 +27,7 @@ void Bullet::OnNoCollision(DWORD dt)
 void Bullet::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	isDeleted = true; 
-	if (dynamic_cast<Chowmein_Conga*>(e->obj))
-		OnCollisionWithChowmeinConga(e);
+
 }
 
 void Bullet::OnCollisionWithChowmeinConga(LPCOLLISIONEVENT e)

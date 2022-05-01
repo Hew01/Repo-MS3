@@ -62,4 +62,7 @@ void CSampleKeyHandler::KeyState(BYTE* states)
 	}
 	else
 		MARCO->SetState(MARCO_STATE_IDLE);
+	if (game->IsKeyDown(DIK_A))
+		MARCO->Shoot();
+
 }
