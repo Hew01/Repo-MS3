@@ -2,21 +2,19 @@
 CLocust::CLocust(float x, float y) :CGameObject(x, y)
 {
 	this->ax = 0;
-	this->ay = LOCUST_GRAVITY;
+	this->ay = 0;
+	this->isDisplay = true;
+	this->isEnable = true;
 	die_start = -1;
-	SetState(LOCUST_STATE_FLYING);
+	SetState(LOCUST_STATE_ATTACKING);
 }
 
 void CLocust::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	left = x;
-	top = y;
-	right = x + LOCUST_BBOX_WIDTH;
-
-	if (state == LOCUST_STATE_DIE)
-		bottom = y + LOCUST_BBOX_HEIGHT_DIE;
-	else
-		bottom = y + LOCUST_BBOX_HEIGHT;
+	left = x - LOCUST_BBOX_WIDTH / 2;
+	top = y - LOCUST_BBOX_HEIGHT / 2;
+	right = left + LOCUST_BBOX_WIDTH;
+	bottom = top + LOCUST_BBOX_HEIGHT;
 }
 
 void CLocust::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -70,7 +68,7 @@ void CLocust::Render()
 	} else if (state == LOCUST_STATE_CATCH_PLAYER) {
 		aniId = ID_ANI_LOCUST_CATCH_PLAYER;
 	} else if (state == LOCUST_STATE_EATING) {
-		
+		aniId = ID_ANI_LOCUST_EATING;
 	}
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y, 1);
@@ -83,9 +81,8 @@ void CLocust::SetState(int state)
 	switch (state)
 	{
 	case LOCUST_STATE_DIE:
-		y += LOCUST_BBOX_HEIGHT - LOCUST_BBOX_HEIGHT_DIE + 1;
-		vx = 0;
-		vy = 0;
+		isDisplay = false;
+		isEnable = false;
 		break;
 	case LOCUST_STATE_FLYING:
 		vx = -LOCUST_WALKING_SPEED;

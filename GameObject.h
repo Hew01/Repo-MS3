@@ -34,7 +34,6 @@ protected:
 	int state;
 
 	bool isDeleted;
-
 public:
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }

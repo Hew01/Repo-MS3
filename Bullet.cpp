@@ -28,8 +28,8 @@ void Bullet::OnCollisionWith(LPCOLLISIONEVENT e)
 	isDeleted = true; 
 	if (dynamic_cast<Chowmein_Conga*>(e->obj))
 		OnCollisionWithChowmeinConga(e);
-	if (dynamic_cast<CLocust*>(e->obj))
-		OnCollisionWithChowmeinConga(e);
+	else if (dynamic_cast<CLocust*>(e->obj))
+		OnCollisionWithLocust(e);
 }
 
 void Bullet::OnCollisionWithChowmeinConga(LPCOLLISIONEVENT e)
@@ -40,14 +40,13 @@ void Bullet::OnCollisionWithChowmeinConga(LPCOLLISIONEVENT e)
 		chowmein->SetState(CHOWMEIN_CONGA_STATE_DIE);
 	}
 }
-
 void Bullet::OnCollisionWithLocust(LPCOLLISIONEVENT e)
 {
-	CLocust* locust = dynamic_cast<CLocust*>(e->obj);
+	/*CLocust* locust = dynamic_cast<CLocust*>(e->obj);
 	if (locust->GetState() != LOCUST_STATE_DIE)
 	{
 		locust->SetState(LOCUST_STATE_DIE);
-	}
+	}*/
 }
 
 void Bullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

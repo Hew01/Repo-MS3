@@ -25,14 +25,21 @@
 #define ID_ANI_LOCUST_PRE_ATTACK 8801003
 #define ID_ANI_LOCUST_ATTACKING 8801004
 #define ID_ANI_LOCUST_CATCH_PLAYER 8801005
+#define ID_ANI_LOCUST_EATING 8801006
 
 #define ID_ANI_LOCUST_CATCH_DIE 8801009
 #define LOCUST_GRAVITY 0.002f
 
 class CLocust : public CGameObject
 {
+	DWORD time_moving;
+	int type;
+	
 	float ax;
 	float ay;
+
+	bool isDisplay;
+	bool isEnable;
 
 	ULONGLONG die_start;
 
@@ -47,7 +54,6 @@ class CLocust : public CGameObject
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 
 public:
-	CLocust(float x, float y);;
-
+	CLocust(float x, float y);
 	virtual void SetState(int state);
 };

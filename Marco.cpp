@@ -51,17 +51,15 @@ void CMARCO::OnCollisionWith(LPCOLLISIONEVENT e)
 
 	if (dynamic_cast<Chowmein_Conga*>(e->obj))
 		OnCollisionWithChowmeinConga(e);
-	if (dynamic_cast<CLocust*>(e->obj))
+	else if (dynamic_cast<CLocust*>(e->obj))
 		OnCollisionWithLocust(e);
-	//else if (dynamic_cast<CCoin*>(e->obj))
-	//	OnCollisionWithCoin(e);
-	else if (dynamic_cast<Portal*>(e->obj))
-		OnCollisionWithPortal(e);
+	/*else if (dynamic_cast<Portal*>(e->obj))
+		OnCollisionWithPortal(e);*/
 	DebugOut(L"x = %f\n", x);
 	DebugOut(L"y = %f\n", y);
 }
 
-void CMARCO::OnCollisionWithLocust(LPCOLLISIONEVENT e)
+void CMARCO::OnCollisionWithChowmeinConga(LPCOLLISIONEVENT e)
 {
 	Chowmein_Conga* chowmein = dynamic_cast<Chowmein_Conga*>(e->obj);
 
@@ -82,16 +80,11 @@ void CMARCO::OnCollisionWithLocust(LPCOLLISIONEVENT e)
 		}*/
 	}
 }
-void CMARCO::OnCollisionWithChowmeinConga(LPCOLLISIONEVENT e) {
+
+void CMARCO::OnCollisionWithLocust(LPCOLLISIONEVENT e) {
 
 }
-//
-//void CMARCO::OnCollisionWithCoin(LPCOLLISIONEVENT e)
-//{
-//	e->obj->Delete();
-//	coin++;
-//}
-//
+
 void CMARCO::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 {
 	Portal* p = (Portal*)e->obj;
