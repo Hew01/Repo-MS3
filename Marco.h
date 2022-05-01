@@ -76,7 +76,7 @@ class CMARCO : public CGameObject
 	ULONGLONG untouchable_start;
 	BOOLEAN isOnPlatform;
 	int coin;
-
+	ULONGLONG last_shot;
 	bool killing;
 
 	void OnCollisionWithChowmeinConga(LPCOLLISIONEVENT e);
@@ -94,11 +94,12 @@ public:
 		untouchable_start = -1;
 		isOnPlatform = false;
 		coin = 0;
+		last_shot = -1;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);
-
+	void Shoot();
 	int IsCollidable()
 	{
 		return (state != MARCO_STATE_DIE);

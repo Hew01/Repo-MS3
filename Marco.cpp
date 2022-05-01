@@ -9,6 +9,8 @@
 #include "PlayScene.h"
 
 #include "Collision.h"
+#include <iostream>
+#define CURRENT_SCENE ((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())
 
 void CMARCO::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
@@ -23,7 +25,6 @@ void CMARCO::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 
 	isOnPlatform = false;
-
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
@@ -31,8 +32,6 @@ void CMARCO::OnNoCollision(DWORD dt)
 {
 	x += vx * dt;
 	y += vy * dt;
-	DebugOut(L"x = %d\n", x);
-	DebugOut(L"y = %d\n", y);
 }
 
 void CMARCO::OnCollisionWith(LPCOLLISIONEVENT e)
@@ -54,8 +53,6 @@ void CMARCO::OnCollisionWith(LPCOLLISIONEVENT e)
 	//	OnCollisionWithCoin(e);
 	else if (dynamic_cast<Portal*>(e->obj))
 		OnCollisionWithPortal(e);
-	DebugOut(L"x = %f\n", x);
-	DebugOut(L"y = %f\n", y);
 }
 
 void CMARCO::OnCollisionWithChowmeinConga(LPCOLLISIONEVENT e)
@@ -212,7 +209,6 @@ void CMARCO::SetState(int state)
 
 	case MARCO_STATE_SHOOTING:
 		break;
-
 	case MARCO_STATE_DIE:
 		vy = -MARCO_JUMP_DEFLECT_SPEED;
 		vx = 0;
@@ -223,6 +219,18 @@ void CMARCO::SetState(int state)
 	CGameObject::SetState(state);
 }
 
+
+void CMARCO::Shoot() {
+	if (last_shot == -1){
+		last_shot = GetTickCount64();
+	}
+	else if (GetTickCount64() - last_shot > 100) {
+		last_shot = GetTickCount64();
+		CGameObject* obj = NULL;
+		obj = new Bullet(x + 16, y, nx);
+		CURRENT_SCENE->AddObject(obj);
+	}
+}
 void CMARCO::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	if (isSitting)
