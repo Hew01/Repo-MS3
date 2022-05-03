@@ -1,12 +1,26 @@
 #include "Locust.h"
-CLocust::CLocust(float x, float y) :CGameObject(x, y)
+#include "Marco.h"
+#include "Game.h"
+CLocust::CLocust(CGameObject* m, float x, float y) :CGameObject(x, y)
 {
+	player = m;
 	this->ax = 0;
 	this->ay = 0;
 	this->isDisplay = true;
 	this->isEnable = true;
+	float posX = 0;
+	float posY = 0;
+	player->GetPosition(posX, posY);
+	if (posX < SCREEN_WIDTH / 2) {
+		this->minX = 0;
+		this->maxX = SCREEN_WIDTH;
+	}
+	else {
+		this->minX = posX - SCREEN_WIDTH / 2;
+		this->maxX = posX + SCREEN_WIDTH / 2;
+	}
 	die_start = -1;
-	SetState(LOCUST_STATE_ATTACKING);
+	SetState(LOCUST_STATE_FLYING);
 }
 
 void CLocust::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -19,8 +33,19 @@ void CLocust::GetBoundingBox(float& left, float& top, float& right, float& botto
 
 void CLocust::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	if (state == LOCUST_STATE_FLYING)
 	vy += ay * dt;
 	vx += ax * dt;
+	float posX = 0;
+	float posY = 0;
+	player->GetPosition(posX, posY);
+
+	DebugOut(L"Player: X= %d, Y= %d\n", posX, posY);
+	DebugOut(L"Locust: X= %d, Y= %d\n", x, y);
+
+	if ((state == LOCUST_STATE_FLYING) && (x > maxX || x < minX)) {
+		vx = -vx;
+	}
 
 	if ((state == LOCUST_STATE_DIE) && (GetTickCount64() - die_start > LOCUST_DIE_TIMEOUT))
 	{
@@ -81,6 +106,9 @@ void CLocust::SetState(int state)
 	switch (state)
 	{
 	case LOCUST_STATE_DIE:
+		die_start = GetTickCount64();
+		vx = 0;
+		vy = 0;
 		isDisplay = false;
 		isEnable = false;
 		break;

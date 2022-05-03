@@ -6,7 +6,7 @@
 #define LOCUST_BBOX_WIDTH 51
 #define LOCUST_BBOX_HEIGHT 45
 #define LOCUST_BBOX_HEIGHT_DIE 52
-#define LOCUST_DIE_TIMEOUT 2000
+#define LOCUST_DIE_TIMEOUT 8000
 
 #define LOCUST_STATE_IDLE 10
 #define LOCUST_STATE_FLYING 100
@@ -32,6 +32,7 @@
 
 class CLocust : public CGameObject
 {
+	CGameObject* player;
 	DWORD time_moving;
 	int type;
 	
@@ -40,6 +41,9 @@ class CLocust : public CGameObject
 
 	bool isDisplay;
 	bool isEnable;
+
+	float maxX;
+	float minX;
 
 	ULONGLONG die_start;
 
@@ -54,6 +58,6 @@ class CLocust : public CGameObject
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 
 public:
-	CLocust(float x, float y);
+	CLocust(CGameObject* m, float x, float y);
 	virtual void SetState(int state);
 };
