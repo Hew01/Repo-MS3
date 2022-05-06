@@ -21,7 +21,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -89,10 +89,13 @@
     <ClCompile Include="Chowmein_Conga.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Debug.cpp" />
+    <ClCompile Include="Flying_Killer.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Jellyfish.cpp" />
     <ClCompile Include="Marco.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Ohumein_Conga.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Portal.cpp" />
@@ -111,10 +114,13 @@
     <ClInclude Include="Chowmein_Conga.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Debug.h" />
+    <ClInclude Include="Flying_Killer.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Jellyfish.h" />
     <ClInclude Include="KeyEventHandler.h" />
     <ClInclude Include="Marco.h" />
+    <ClInclude Include="Ohumein_Conga.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Portal.h" />

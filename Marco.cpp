@@ -3,6 +3,7 @@
 
 #include "Marco.h"
 #include "Chowmein_Conga.h"
+#include "Jellyfish.h"
 #include "Game.h"
 #include "Portal.h"
 #include "Bullet.h"
@@ -50,8 +51,8 @@ void CMARCO::OnCollisionWith(LPCOLLISIONEVENT e)
 
 	if (dynamic_cast<Chowmein_Conga*>(e->obj))
 		OnCollisionWithChowmeinConga(e);
-	//else if (dynamic_cast<CCoin*>(e->obj))
-	//	OnCollisionWithCoin(e);
+	else if (dynamic_cast<CJellyfish*>(e->obj))
+		OnCollisionWithJellyfish(e);
 	else if (dynamic_cast<Portal*>(e->obj))
 		OnCollisionWithPortal(e);
 	DebugOut(L"x = %f\n", x);
@@ -76,6 +77,28 @@ void CMARCO::OnCollisionWithChowmeinConga(LPCOLLISIONEVENT e)
 		/*if (killing)
 		{
 				chowmein->SetState(CHOWMEIN_CONGA_STATE_DIE);
+		}*/
+	}
+}
+
+void CMARCO::OnCollisionWithJellyfish(LPCOLLISIONEVENT e)
+{
+	CJellyfish* jellyfish = dynamic_cast<CJellyfish*>(e->obj);
+
+	// jump on top >> kill Goomba and deflect a bit 
+	if (e->ny < 0)
+	{
+		if (jellyfish->GetState() != JELLYFISH_STATE_DIE)
+		{
+			jellyfish->SetState(JELLYFISH_STATE_DIE);
+			vy = -MARCO_JUMP_DEFLECT_SPEED;
+		}
+	}
+	else // hit by Goomba
+	{
+		/*if (killing)
+		{
+				Jellyfish->SetState(CHOWMEIN_CONGA_STATE_DIE);
 		}*/
 	}
 }
