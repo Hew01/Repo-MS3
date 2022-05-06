@@ -98,6 +98,7 @@ class CMARCO : public CGameObject
 	bool first_shot = true;
 
 	void OnCollisionWithChowmeinConga(LPCOLLISIONEVENT e);
+	void OnCollisionWithOhumeinConga(LPCOLLISIONEVENT e);
 	void OnCollisionWithLocust(LPCOLLISIONEVENT e);
 	//void OnCollisionWithCoin(LPCOLLISIONEVENT e);
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);

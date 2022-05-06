@@ -72,6 +72,7 @@
     <ClCompile Include="Portal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+
     <ClCompile Include="Locust.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -158,6 +159,7 @@
     <ClInclude Include="Portal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+
     <ClInclude Include="Locust.h">
       <Filter>Header Files</Filter>
     </ClInclude>
