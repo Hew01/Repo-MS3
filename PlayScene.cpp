@@ -5,6 +5,9 @@
 #include "Utils.h"
 #include "Textures.h"
 #include "Sprites.h"
+#include "Animations.h"
+#include "Foreground.h"
+#include "Grid.h"
 
 #include "Marco.h"
 #include "Chowmein_Conga.h"
@@ -12,6 +15,7 @@
 #include "Platform.h"
 #include "AssetIDs.h"
 #include "Locust.h"
+
 
 #include "SampleKeyEventHandler.h"
 
@@ -231,6 +235,8 @@ void CPlayScene::Load()
 
 	f.close();
 
+	gameCamera = Camera::GetInstance();
+
 	DebugOut(L"[INFO] Done loading scene  %s\n", sceneFilePath);
 }
 
@@ -325,3 +331,93 @@ void CPlayScene::PurgeDeletedObjects()
 		std::remove_if(objects.begin(), objects.end(), CPlayScene::IsGameObjectDeleted),
 		objects.end());
 }
+
+///*
+//	Parse a line in section [MAP]
+//*/
+//void CPlayScene::_ParseSection_MAP(string line)
+//{
+//	vector<string> tokens = split(line);
+//
+//	//DebugOut(L"--> %s\n",ToWSTR(line).c_str());
+//
+//	if (tokens.size() < 1) return; // skip invalid lines - an map must have at least path
+//
+//	wstring path = ToWSTR(tokens[0]);
+//
+//	tiledMap = new CTiledMap();
+//	tiledMap->LoadMap(path.c_str());
+//
+//	vector<string> fg = tiledMap->getForeground();
+//	vector<string> bg = tiledMap->getBackground();
+//	if (fg.size() > 0) {
+//		float x = atof(fg[2].c_str());
+//		float y = atof(fg[3].c_str());
+//		int ani_set_id = atoi(fg[4].c_str());
+//		CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+//		foreground = new CForeground(x, y);
+//		foreground->SetPosition(x, y);
+//		foreground->SetAnimationSet(animation_sets->Get(ani_set_id));
+//	}
+//	if (bg.size() > 0) {
+//		float x = atof(bg[2].c_str());
+//		float y = atof(bg[3].c_str());
+//		int ani_set_id = atoi(bg[4].c_str());
+//		CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+//		background = new CBackground(x, y);
+//		background->SetPosition(x, y);
+//		background->SetAnimationSet(animation_sets->Get(ani_set_id));
+//	}
+//
+//
+//
+//	CTiledMapSets::GetInstance()->Add(id, tiledMap);
+//
+//}
+//
+//void CPlayScene::_ParseSection_GRID(string line)
+//{
+//	// check flag to init grid
+//	if (initGridFlag)
+//	{
+//		int width, height;
+//		//CTiledMap::GetInstance()->GetMapWidth(width);
+//		//CTiledMap::GetInstance()->GetMapHeight(height);
+//		CTiledMapSets::GetInstance()->Get(id)->GetMapWidth(width);
+//		CTiledMapSets::GetInstance()->Get(id)->GetMapHeight(height);
+//		int numCol = width / CELL_WIDTH;
+//		int numRow = height / CELL_HEIGHT;
+//
+//		(height % CELL_HEIGHT == 0) ? numRow = numRow : numRow = numRow += 1;
+//		(width % CELL_HEIGHT == 0) ? numCol = numCol : numCol = numCol += 1;
+//
+//		CGrid::GetInstance()->SetCol(numCol);
+//		CGrid::GetInstance()->SetRow(numRow);
+//
+//		CGrid::GetInstance()->Init();
+//
+//		initGridFlag = false;
+//	}
+//
+//	vector<string> tokens = split(line);
+//
+//	if (tokens.size() < 3) return; // skip invalid lines
+//	else
+//	{
+//		int cellX = atoi(tokens[0].c_str());
+//		int cellY = atoi(tokens[1].c_str());
+//
+//		for (int i = 2; i < tokens.size(); i++)
+//		{
+//			int object_id = atoi(tokens[i].c_str());
+//			for (int j = 0; j < objects.size(); j++)
+//			{
+//				LPGAMEOBJECT object = objects.at(j);
+//				if (object->GetID() == object_id)
+//				{
+//					CGrid::GetInstance()->Add(object, cellX, cellY);
+//				}
+//			}
+//		}
+//	}
+//}

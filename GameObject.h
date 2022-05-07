@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 class GameObject
 {
 };
@@ -33,6 +33,11 @@ protected:
 
 	int state;
 
+	int id = 0;//mặc định
+
+	LPANIMATION_SET animation_set;
+	LPANIMATION_SET animation_item_set;
+
 	bool isDeleted;
 public:
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
@@ -44,7 +49,13 @@ public:
 	virtual void Delete() { isDeleted = true; }
 	bool IsDeleted() { return isDeleted; }
 
+	void SetAnimationSet(LPANIMATION_SET ani_set) { animation_set = ani_set; }
+	void SetAnimationItemSet(LPANIMATION_SET ani_set) { animation_item_set = ani_set; }
+
 	void RenderBoundingBox();
+
+	int GetID() { return this->id; }
+	void SetID(int _id) { this->id = _id; }
 
 	CGameObject();
 	CGameObject(float x, float y) :CGameObject() { this->x = x; this->y = y; }

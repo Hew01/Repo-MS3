@@ -1,6 +1,7 @@
 #pragma once
 
 #include "KeyEventHandler.h"
+#include "Map.h"
 
 /*
 *  Abstract class for a game scene
@@ -25,6 +26,7 @@ public:
 	virtual void Unload() = 0;
 	virtual void Update(DWORD dt) = 0;
 	virtual void Render() = 0;
+	virtual CMap* GetMap() { return NULL; }
 };
 typedef CScene* LPSCENE;
 
