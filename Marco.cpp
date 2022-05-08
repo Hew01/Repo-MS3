@@ -10,6 +10,7 @@
 
 #include "Collision.h"
 #include <iostream>
+#include <stdlib.h>
 #define CURRENT_SCENE ((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())
 
 void CMARCO::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -93,41 +94,33 @@ void CMARCO::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 //
 // Get animdation ID for big MARCO
 //
-int CMARCO::GetAniId()
+int CMARCO::GetAniId(int OG_ID)
 {
 	int aniId = -1;
 	if (!isOnPlatform)
 	{
 		if (nx >= 0)
-			aniId = ID_ANI_MARCO_JUMP_WALK_RIGHT;
+			aniId = OG_ID+200;
 		else
-			aniId = ID_ANI_MARCO_JUMP_WALK_LEFT;
+			aniId = OG_ID + 200;
 	}
 	else
-		if (isSitting)
+		if (vx == 0)
 		{
-			if (nx > 0)
-				aniId = ID_ANI_MARCO_SIT_RIGHT;
-			else
-				aniId = ID_ANI_MARCO_SIT_LEFT;
+			if (nx > 0) aniId = OG_ID + 100;
+			else aniId = OG_ID + 100;
 		}
-		else
-			if (vx == 0)
-			{
-				if (nx > 0) aniId = ID_ANI_MARCO_IDLE_RIGHT;
-				else aniId = ID_ANI_MARCO_IDLE_LEFT;
-			}
-			else if (vx > 0)
-			{
-				aniId = ID_ANI_MARCO_WALKING_RIGHT;
-			}
-			else // vx < 0
-			{
-				aniId = ID_ANI_MARCO_WALKING_LEFT;
-			}
+		else if (vx > 0)
+		{
+			aniId = OG_ID + 200;
+		}
+		else // vx < 0
+		{
+			aniId = OG_ID +200;
+		}
 
-	if (aniId == -1) aniId = ID_ANI_MARCO_IDLE_RIGHT;
-	if (shooting) aniId = ID_ANI_MARCO_SHOOTING_RIGHT;
+	if (aniId == -1) aniId = OG_ID + 100;
+	if (shooting) aniId = OG_ID + 300;
 	return aniId;
 }
 int CMARCO::GetAniIdLeg()
@@ -151,30 +144,47 @@ int CMARCO::GetAniIdLeg()
 
 	return aniId;
 }
+
 void CMARCO::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
 	CAnimations* animationsLeg = CAnimations::GetInstance();
 	int aniId = -1;
 	int aniIdLeg = ID_ANI_LEG_IDLE;
+	int og_id;
+	int x_shift = 0;
+	int x_shoot_shift = 0;
+	int y_shift = 15;
+	if (weapon == WEAPON_PISTOL) {
+		og_id = OG_ID_PISTOL;
+		x_shift = 5;
+		x_shoot_shift = 9;
+	}
+	else {
+		og_id = OG_ID_MG;
+		x_shift = 6;
+		x_shoot_shift = 15;
+
+	}
 
 	if (state == MARCO_STATE_DIE)
 		aniId = ID_ANI_MARCO_DIE;
 	else
 	{
-		aniId = GetAniId();
+		aniId = GetAniId(og_id);
 		aniIdLeg = GetAniIdLeg();
 	}
+
 	if (shooting) {
-		animationsLeg->Get(aniIdLeg)->Render(x, y + 15);
-		animations->Get(aniId)->Render(x + 8, y);
+		animationsLeg->Get(aniIdLeg)->Render(x, y + y_shift);
+		animations->Get(aniId)->Render(x + x_shoot_shift, y);
 	}
 	else {
-		animationsLeg->Get(aniIdLeg)->Render(x, y + 15);
-		animations->Get(aniId)->Render(x + 5, y);
+		animationsLeg->Get(aniIdLeg)->Render(x, y + y_shift);
+		animations->Get(aniId)->Render(x + x_shift, y);
 	}
 
-	//RenderBoundingBox();
+	RenderBoundingBox();
 
 	//DebugOutTitle(L"Coins: %d", coin);
 }
@@ -238,6 +248,7 @@ void CMARCO::SetState(int state)
 	case MARCO_STATE_SHOOT_RELEASE:
 		shooting = false;
 		first_shot = true;
+		last_shot = 0;
 		break;
 	case MARCO_STATE_DIE:
 		vy = -MARCO_JUMP_DEFLECT_SPEED;
@@ -252,9 +263,24 @@ void CMARCO::SetState(int state)
 
 void CMARCO::Shoot() {
 	int delay;
-	if (first_shot) delay = 150;
-	else delay = 600;
-	if (last_shot == -1){
+	int y_shift = 0;
+	int x_shift = 16;
+	if (weapon == WEAPON_PISTOL) {
+		if (first_shot) 
+			delay = 150;
+		else delay = 650;
+	}
+	else if (weapon == WEAPON_MG)
+	{
+		delay = 150;
+		y_shift = rand()%6+2;
+	}
+	else {
+		delay = 300;
+		x_shift = 24;
+		y_shift = rand() % 10 + 1;
+	}
+	if (last_shot == 0){
 		last_shot = GetTickCount64();
 	}
 	else if (GetTickCount64() - last_shot > delay) {
@@ -264,7 +290,7 @@ void CMARCO::Shoot() {
 		{
 			bullet -= 1;
 			CGameObject* obj = NULL;
-			obj = new Bullet(x + 16, y, nx);
+			obj = new Bullet(x + x_shift, y + y_shift, nx,weapon, bullet%20);
 			CURRENT_SCENE->AddObject(obj);
 		}
 	}
