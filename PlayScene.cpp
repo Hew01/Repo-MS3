@@ -9,6 +9,7 @@
 #include "Marco.h"
 #include "Chowmein_Conga.h"
 #include "Ohumein_Conga.h"
+#include "Jellyfish.h"
 #include "Portal.h"
 #include "Platform.h"
 #include "AssetIDs.h"
@@ -121,6 +122,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 	case OBJECT_TYPE_CHOWMEIN_CONGA: obj = new Chowmein_Conga(x, y); break;
 	case OBJECT_TYPE_OHUMEIN_CONGA: obj = new COhumein_Conga(player, x, y); break;
+	case OBJECT_TYPE_JELLYFISH: obj = new CJellyfish(player, x, y); break;
 	//case OBJECT_TYPE_BRICK: obj = new CBrick(x, y); break;
 	//case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
 

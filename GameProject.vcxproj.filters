@@ -78,6 +78,9 @@
     <ClCompile Include="Ohumein_Conga.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Jellyfish.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -147,6 +150,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Ohumein_Conga.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Jellyfish.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

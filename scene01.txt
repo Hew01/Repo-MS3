@@ -6,6 +6,7 @@ map.txt
 chowmein_conga.txt
 bullet.txt
 ohumein_conga.txt
+jellyfish.txt
 
 #
 [OBJECTS]
@@ -23,17 +24,11 @@ ohumein_conga.txt
 # MACRO
 0	100	10
 
-#CHOWMEIN_CONGA
-2	400	10
-2	300	10
-2	250	10
-2	200	10
-
-#OHUMEIN_CONGA
-6	400	10
-6	300	10
-6	250	10
-6	200	10
+#Jellyfish
+7	400	10
+7	300	10
+7	250	10
+7	200	10
 
 #Portal 
 50	1570	130	1600	160	2
