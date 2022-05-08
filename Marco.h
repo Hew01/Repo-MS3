@@ -26,29 +26,30 @@
 #define MARCO_STATE_SIT_RELEASE		601
 
 #define MARCO_STATE_SHOOTING		900
+#define MARCO_STATE_SHOOT_RELEASE		901
 
 
 #pragma region ANIMATION_ID
 
-#define ID_ANI_MARCO_IDLE_RIGHT 400
-#define ID_ANI_MARCO_IDLE_LEFT 401
+#define ID_ANI_MARCO_IDLE_RIGHT 32000
+#define ID_ANI_MARCO_IDLE_LEFT 32000
 
-#define ID_ANI_LEG 410
+#define ID_ANI_LEG_RUN 21000
 
-#define ID_ANI_MARCO_WALKING_RIGHT 500	
-#define ID_ANI_MARCO_WALKING_LEFT 501
+#define ID_ANI_MARCO_WALKING_RIGHT 31000	
+#define ID_ANI_MARCO_WALKING_LEFT 31000
 
-#define ID_ANI_MARCO_JUMP_WALK_RIGHT 700
-#define ID_ANI_MARCO_JUMP_WALK_LEFT 701
+#define ID_ANI_MARCO_JUMP_WALK_RIGHT 31000
+#define ID_ANI_MARCO_JUMP_WALK_LEFT 31000
 
-#define ID_ANI_MARCO_SIT_RIGHT 900
-#define ID_ANI_MARCO_SIT_LEFT 901
+#define ID_ANI_MARCO_SIT_RIGHT 32000
+#define ID_ANI_MARCO_SIT_LEFT 32000
 
-#define ID_ANI_MARCO_DIE 999
+#define ID_ANI_MARCO_DIE 32000
 
-#define ID_ANI_MARCO_SHOOTING_RIGHT 1100001
+#define ID_ANI_MARCO_SHOOTING_RIGHT 33000
 
-
+#define ID_ANI_LEG_IDLE	22000
 #pragma endregion
 
 #define GROUND_Y 160.0f
@@ -77,7 +78,10 @@ class CMARCO : public CGameObject
 	BOOLEAN isOnPlatform;
 	int coin;
 	ULONGLONG last_shot;
+	bool shooting;
 	bool killing;
+	int bullet = 10;
+	bool first_shot = true;
 
 	void OnCollisionWithChowmeinConga(LPCOLLISIONEVENT e);
 	//void OnCollisionWithCoin(LPCOLLISIONEVENT e);
@@ -95,6 +99,7 @@ public:
 		isOnPlatform = false;
 		coin = 0;
 		last_shot = -1;
+		shooting = false;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
@@ -111,6 +116,7 @@ public:
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 
 	int GetAniId();
+	int GetAniIdLeg();
 
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 
