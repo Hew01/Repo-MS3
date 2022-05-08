@@ -7,7 +7,7 @@
 #include "Game.h"
 #include "GameObject.h"
 #include "Textures.h"
-#include "Animation.h"
+
 #include "Animations.h"
 
 #include "AssetIDs.h"
@@ -18,8 +18,6 @@
 
 
 #define BACKGROUND_COLOR D3DXCOLOR(200.0f/255, 200.0f/255, 255.0f/255, 0.0f)
-#define SCREEN_WIDTH 320
-#define SCREEN_HEIGHT 240
 
 #define MAX_FRAME_RATE 60
 

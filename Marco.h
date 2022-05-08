@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 
-#include "Animation.h"
+
 #include "Animations.h"
 
 #include "Debug.h"
@@ -98,6 +98,7 @@ class CMARCO : public CGameObject
 	bool first_shot = true;
 
 	void OnCollisionWithChowmeinConga(LPCOLLISIONEVENT e);
+	void OnCollisionWithLocust(LPCOLLISIONEVENT e);
 	//void OnCollisionWithCoin(LPCOLLISIONEVENT e);
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
 

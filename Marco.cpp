@@ -7,6 +7,7 @@
 #include "Portal.h"
 #include "Bullet.h"
 #include "PlayScene.h"
+#include "Locust.h"
 
 #include "Collision.h"
 #include <iostream>
@@ -50,10 +51,12 @@ void CMARCO::OnCollisionWith(LPCOLLISIONEVENT e)
 
 	if (dynamic_cast<Chowmein_Conga*>(e->obj))
 		OnCollisionWithChowmeinConga(e);
-	//else if (dynamic_cast<CCoin*>(e->obj))
-	//	OnCollisionWithCoin(e);
-	else if (dynamic_cast<Portal*>(e->obj))
-		OnCollisionWithPortal(e);
+	else if (dynamic_cast<CLocust*>(e->obj))
+		OnCollisionWithLocust(e);
+	/*else if (dynamic_cast<Portal*>(e->obj))
+		OnCollisionWithPortal(e);*/
+	DebugOut(L"x = %f\n", x);
+	DebugOut(L"y = %f\n", y);
 }
 
 void CMARCO::OnCollisionWithChowmeinConga(LPCOLLISIONEVENT e)
@@ -77,13 +80,14 @@ void CMARCO::OnCollisionWithChowmeinConga(LPCOLLISIONEVENT e)
 		}*/
 	}
 }
-//
-//void CMARCO::OnCollisionWithCoin(LPCOLLISIONEVENT e)
-//{
-//	e->obj->Delete();
-//	coin++;
-//}
-//
+
+void CMARCO::OnCollisionWithLocust(LPCOLLISIONEVENT e) {
+	CLocust* locust = (CLocust*)e->obj;
+	if (locust->GetState() == LOCUST_STATE_ATTACKING) {
+		locust->SetState(LOCUST_STATE_CATCH_PLAYER);
+	}
+}
+
 void CMARCO::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 {
 	Portal* p = (Portal*)e->obj;
