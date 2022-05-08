@@ -27,6 +27,7 @@ class CAnimation
 	int currentFrame;
 	int defaultTime;
 	vector<LPANIMATION_FRAME> frames;
+	bool first = true;
 public:
 	bool isPause = false;
 	bool isFinish = false;
@@ -35,13 +36,9 @@ public:
 	bool isIntroEndScence = false;
 	CAnimation(int defaultTime = 100) { this->defaultTime = defaultTime; lastFrameTime = -1; currentFrame = -1; }
 	void Add(int spriteId, DWORD time = 0);
-	//Bổ sung
-	int GetCurrentFrame() { return this->currentFrame; }
-	void SetCurrentFrame(int frame) { this->currentFrame = frame; }
-	LPANIMATION_FRAME GetFrame(int frame) { return frames[frame]; }
+	void Render(float x, float y, float n = .0f);
+	void RenderNew(float x, float y,float n = .0f);
 
-
-	void Render(float x, float y, bool flip = false, int alpha = 255, float scale = 1);
 };
 
 typedef CAnimation* LPANIMATION;
