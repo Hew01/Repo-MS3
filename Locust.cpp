@@ -12,14 +12,16 @@ CLocust::CLocust(CGameObject* m, float x, float y) :CGameObject(x, y)
 	float posY = 0;
 	player->GetPosition(posX, posY);
 	if (posX < SCREEN_WIDTH / 2) {
-		this->minX = 0;
-		this->maxX = SCREEN_WIDTH;
+		this->minX = LOCUST_BBOX_WIDTH;
+		this->maxX = SCREEN_WIDTH - LOCUST_BBOX_WIDTH;
 	}
 	else {
-		this->minX = posX - SCREEN_WIDTH / 2;
-		this->maxX = posX + SCREEN_WIDTH / 2;
+		this->minX = posX - SCREEN_WIDTH / 2 + LOCUST_BBOX_WIDTH;
+		this->maxX = posX + SCREEN_WIDTH / 2 - LOCUST_BBOX_WIDTH;
 	}
 	die_start = -1;
+	start_turning = -1;
+	start_eating = -1;
 	SetState(LOCUST_STATE_FLYING);
 }
 
@@ -44,7 +46,42 @@ void CLocust::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	DebugOut(L"Locust: X= %d, Y= %d\n", x, y);
 
 	if ((state == LOCUST_STATE_FLYING) && (x > maxX || x < minX)) {
-		vx = -vx;
+		vx = 0;
+		SetState(LOCUST_STATE_TURNING);
+	}
+	else if (state == LOCUST_STATE_TURNING) {
+		if (y >= (SCREEN_HEIGHT / 2 - LOCUST_BBOX_HEIGHT /2) || y < LOCUST_BBOX_HEIGHT / 2) {
+			vy = -vy;
+			vx = -vx;
+			if (GetTickCount64() - start_turning > LOCUST_TURNING_TIMEOUT) {
+				vx = 0;
+				vy = 0;
+				SetState(LOCUST_STATE_ATTACKING);
+			}
+		}
+	}
+	else if (state == LOCUST_STATE_ATTACKING) {
+		if (y >= posY - 10) {
+			vx = -vx;
+			vy = -vy;
+			if (y >= (SCREEN_HEIGHT / 2 - LOCUST_BBOX_HEIGHT / 2) || y < LOCUST_BBOX_HEIGHT / 2) {
+				SetState(LOCUST_STATE_TURNING);
+			}
+		}
+	}
+	else if (state == LOCUST_STATE_CATCH_PLAYER) {
+		player->SetPosition(x-10, y+5);
+		if (y <= LOCUST_BBOX_HEIGHT / 2) {
+			vx = vy = 0;
+			SetState(LOCUST_STATE_EATING);
+		}
+
+	}
+	else if (state == LOCUST_STATE_EATING) {
+		if (GetTickCount64() - start_eating > LOCUST_EATING_TIMEOUT) {
+			SetState(LOCUST_STATE_FLYING);
+			player->SetState(MARCO_STATE_DIE);
+		}
 	}
 
 	if ((state == LOCUST_STATE_DIE) && (GetTickCount64() - die_start > LOCUST_DIE_TIMEOUT))
@@ -68,14 +105,14 @@ void CLocust::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (!e->obj->IsBlocking()) return;
 	if (dynamic_cast<CLocust*>(e->obj)) return;
 
-	if (e->ny != 0)
+	/*if (e->ny != 0)
 	{
 		vy = 0;
 	}
 	else if (e->nx != 0)
 	{
 		vx = -vx;
-	}
+	}*/
 }
 
 void CLocust::Render()
@@ -97,7 +134,7 @@ void CLocust::Render()
 	}
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y, 1);
-	// RenderBoundingBox();
+	 RenderBoundingBox();
 }
 
 void CLocust::SetState(int state)
@@ -113,12 +150,27 @@ void CLocust::SetState(int state)
 		isEnable = false;
 		break;
 	case LOCUST_STATE_FLYING:
-		vx = -LOCUST_WALKING_SPEED;
+		vx = LOCUST_WALKING_SPEED;
+		break;
 	case LOCUST_STATE_ATTACKING:
+		x = SCREEN_WIDTH - LOCUST_BBOX_WIDTH / 2;
+		y = LOCUST_BBOX_HEIGHT;
+		vy = LOCUST_TURNING_SPEED;
+		vx = -LOCUST_TURNING_SPEED;
+		break;
 	case LOCUST_STATE_TURNING:
+		start_turning = GetTickCount64();
+		vy = LOCUST_TURNING_SPEED;
+		vx = -LOCUST_TURNING_SPEED;
+		break;
 	case LOCUST_STATE_PRE_ATTACK:
+		break;
 	case LOCUST_STATE_CATCH_PLAYER:
-	case ID_ANI_LOCUST_CATCH_PLAYER:
+		vy = -LOCUST_WALKING_SPEED;
+		vx = 0;
+		break;
+	case LOCUST_STATE_EATING:
+		start_eating = GetTickCount64();
 		break;
 	}
 }

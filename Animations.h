@@ -1,7 +1,50 @@
-#pragma once
+﻿#pragma once
+#include <Windows.h>
+#include <d3dx9.h>
+#include <unordered_map>
 
-#include "Animation.h"
-#include "Sprite.h"
+#include "Sprites.h"
+
+/*
+Sprite animation
+*/
+class CAnimationFrame
+{
+	LPSPRITE sprite;
+	DWORD time;
+
+public:
+	CAnimationFrame(LPSPRITE sprite, int time) { this->sprite = sprite; this->time = time; }
+	DWORD GetTime() { return time; }
+	LPSPRITE GetSprite() { return sprite; }
+};
+
+typedef CAnimationFrame* LPANIMATION_FRAME;
+
+class CAnimation
+{
+	DWORD lastFrameTime;
+	int currentFrame;
+	int defaultTime;
+	vector<LPANIMATION_FRAME> frames;
+public:
+	bool isPause = false;
+	bool isFinish = false;
+	bool isRepeat = true;
+	bool isHubObject = false;
+	bool isIntroEndScence = false;
+	CAnimation(int defaultTime = 100) { this->defaultTime = defaultTime; lastFrameTime = -1; currentFrame = -1; }
+	void Add(int spriteId, DWORD time = 0);
+	//Bổ sung
+	int GetCurrentFrame() { return this->currentFrame; }
+	void SetCurrentFrame(int frame) { this->currentFrame = frame; }
+	LPANIMATION_FRAME GetFrame(int frame) { return frames[frame]; }
+
+
+	void Render(float x, float y, bool flip = false, int alpha = 255, float scale = 1);
+};
+
+typedef CAnimation* LPANIMATION;
 
 class CAnimations
 {
@@ -17,12 +60,13 @@ public:
 	static CAnimations* GetInstance();
 };
 
-typedef CAnimationFrame* LPANIMATION_FRAME;
-
 typedef vector<LPANIMATION> CAnimationSet;
 
 typedef CAnimationSet* LPANIMATION_SET;
 
+/*
+	Manage animation set database
+*/
 class CAnimationSets
 {
 	static CAnimationSets* __instance;

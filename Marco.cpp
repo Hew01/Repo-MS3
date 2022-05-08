@@ -82,7 +82,10 @@ void CMARCO::OnCollisionWithChowmeinConga(LPCOLLISIONEVENT e)
 }
 
 void CMARCO::OnCollisionWithLocust(LPCOLLISIONEVENT e) {
-
+	CLocust* locust = (CLocust*)e->obj;
+	if (locust->GetState() == LOCUST_STATE_ATTACKING) {
+		locust->SetState(LOCUST_STATE_CATCH_PLAYER);
+	}
 }
 
 void CMARCO::OnCollisionWithPortal(LPCOLLISIONEVENT e)

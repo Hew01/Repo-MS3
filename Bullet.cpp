@@ -42,11 +42,11 @@ void Bullet::OnCollisionWithChowmeinConga(LPCOLLISIONEVENT e)
 }
 void Bullet::OnCollisionWithLocust(LPCOLLISIONEVENT e)
 {
-	/*CLocust* locust = dynamic_cast<CLocust*>(e->obj);
+	CLocust* locust = dynamic_cast<CLocust*>(e->obj);
 	if (locust->GetState() != LOCUST_STATE_DIE)
 	{
 		locust->SetState(LOCUST_STATE_DIE);
-	}*/
+	}
 }
 
 void Bullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
