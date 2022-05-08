@@ -25,9 +25,7 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_A:
 		MARCO->SetState(MARCO_STATE_SHOOTING);
 		break;
-	case DIK_R: // reset
-		//Reload();
-		break;
+
 	}
 }
 
@@ -66,5 +64,11 @@ void CSampleKeyHandler::KeyState(BYTE* states)
 		MARCO->SetState(MARCO_STATE_IDLE);
 	if (game->IsKeyDown(DIK_A))
 		MARCO->Shoot();
+	if (game->IsKeyDown(DIK_1))
+		MARCO->SetWeapon(0);
+	if (game->IsKeyDown(DIK_2))
+		MARCO->SetWeapon(1);
+	if (game->IsKeyDown(DIK_3))
+		MARCO->SetWeapon(2);
 
 }

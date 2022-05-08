@@ -29,10 +29,23 @@
 #define MARCO_STATE_SHOOT_RELEASE		901
 
 
+
+#pragma region Weapon type
+#define WEAPON_PISTOL 0
+#define WEAPON_MG 1
+#define WEAPON_ROCKET 2
+
+
 #pragma region ANIMATION_ID
+
+#define OG_ID_PISTOL 30000
+#define OG_ID_MG	31000
 
 #define ID_ANI_MARCO_IDLE_RIGHT 32000
 #define ID_ANI_MARCO_IDLE_LEFT 32000
+
+#define ID_ANI_MARCO_MG_IDLE_RIGHT 42000
+
 
 #define ID_ANI_LEG_RUN 21000
 
@@ -73,6 +86,7 @@ class CMARCO : public CGameObject
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
 
+	int weapon;
 	int untouchable;
 	ULONGLONG untouchable_start;
 	BOOLEAN isOnPlatform;
@@ -80,7 +94,7 @@ class CMARCO : public CGameObject
 	ULONGLONG last_shot;
 	bool shooting;
 	bool killing;
-	int bullet = 10;
+	int bullet = 1000;
 	bool first_shot = true;
 
 	void OnCollisionWithChowmeinConga(LPCOLLISIONEVENT e);
@@ -93,17 +107,17 @@ public:
 		isSitting = false;
 		ax = 0.0f;
 		ay = MARCO_GRAVITY;
-
+		weapon = 0;
 		untouchable = 0;
 		untouchable_start = -1;
 		isOnPlatform = false;
 		coin = 0;
-		last_shot = -1;
 		shooting = false;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);
+	void SetWeapon(int weapon_id) { weapon = weapon_id; }
 	void Shoot();
 	int IsCollidable()
 	{
@@ -115,7 +129,7 @@ public:
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 
-	int GetAniId();
+	int GetAniId(int OG_ID);
 	int GetAniIdLeg();
 
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
