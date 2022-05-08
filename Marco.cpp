@@ -127,28 +127,53 @@ int CMARCO::GetAniId()
 			}
 
 	if (aniId == -1) aniId = ID_ANI_MARCO_IDLE_RIGHT;
+	if (shooting) aniId = ID_ANI_MARCO_SHOOTING_RIGHT;
+	return aniId;
+}
+int CMARCO::GetAniIdLeg()
+{
+	int aniId = -1;
+	if (vx == 0)
+	{
+		if (nx > 0) aniId = ID_ANI_LEG_IDLE;
+		else aniId = ID_ANI_LEG_IDLE;
+	}
+	else if (vx > 0)
+	{
+		aniId = ID_ANI_LEG_RUN;
+	}
+	else // vx < 0
+	{
+		aniId = ID_ANI_LEG_RUN;
+	}
+
+	if (aniId == -1) aniId = ID_ANI_LEG_IDLE;
 
 	return aniId;
 }
-
 void CMARCO::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
+	CAnimations* animationsLeg = CAnimations::GetInstance();
 	int aniId = -1;
+	int aniIdLeg = ID_ANI_LEG_IDLE;
 
 	if (state == MARCO_STATE_DIE)
 		aniId = ID_ANI_MARCO_DIE;
-	else if (state == MARCO_STATE_SHOOTING)
+	else
 	{
-		aniId = ID_ANI_MARCO_SHOOTING_RIGHT;
-		animations->Get(aniId)->Render(x, y);
-		aniId = ID_ANI_LEG;
-		animations->Get(aniId)->Render(x - 5, y + 14);
-		return;
+		aniId = GetAniId();
+		aniIdLeg = GetAniIdLeg();
 	}
-	else aniId = GetAniId();
+	if (shooting) {
+		animationsLeg->Get(aniIdLeg)->Render(x, y + 15);
+		animations->Get(aniId)->Render(x + 8, y);
+	}
+	else {
+		animationsLeg->Get(aniIdLeg)->Render(x, y + 15);
+		animations->Get(aniId)->Render(x + 5, y);
+	}
 
-	animations->Get(aniId)->Render(x, y);
 	//RenderBoundingBox();
 
 	//DebugOutTitle(L"Coins: %d", coin);
@@ -208,6 +233,11 @@ void CMARCO::SetState(int state)
 		break;
 
 	case MARCO_STATE_SHOOTING:
+		shooting = true;
+		break;
+	case MARCO_STATE_SHOOT_RELEASE:
+		shooting = false;
+		first_shot = true;
 		break;
 	case MARCO_STATE_DIE:
 		vy = -MARCO_JUMP_DEFLECT_SPEED;
@@ -221,14 +251,22 @@ void CMARCO::SetState(int state)
 
 
 void CMARCO::Shoot() {
+	int delay;
+	if (first_shot) delay = 150;
+	else delay = 600;
 	if (last_shot == -1){
 		last_shot = GetTickCount64();
 	}
-	else if (GetTickCount64() - last_shot > 100) {
+	else if (GetTickCount64() - last_shot > delay) {
+		first_shot = false;
 		last_shot = GetTickCount64();
-		CGameObject* obj = NULL;
-		obj = new Bullet(x + 16, y, nx);
-		CURRENT_SCENE->AddObject(obj);
+		if (bullet > 0)
+		{
+			bullet -= 1;
+			CGameObject* obj = NULL;
+			obj = new Bullet(x + 16, y, nx);
+			CURRENT_SCENE->AddObject(obj);
+		}
 	}
 }
 void CMARCO::GetBoundingBox(float& left, float& top, float& right, float& bottom)
