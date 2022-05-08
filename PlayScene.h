@@ -36,6 +36,7 @@ public:
 
 	void Clear();
 	void PurgeDeletedObjects();
+	void AddObject(CGameObject* obj) { objects.push_back(obj); }
 
 	static bool IsGameObjectDeleted(const LPGAMEOBJECT& o);
 };
