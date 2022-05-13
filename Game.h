@@ -3,6 +3,7 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 #include <unordered_map>
+#include "Camera.h"
 
 #define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
@@ -49,6 +50,7 @@ class CGame
 	float cam_x = 0.0f;
 	float cam_y = 0.0f;
 
+
 	int screen_width;
 	int screen_height;
 
@@ -59,6 +61,7 @@ class CGame
 	unordered_map<int, LPSCENE> scenes;
 	int current_scene;
 	int next_scene = -1;
+	CCamera* cam;
 
 	void _ParseSection_SETTINGS(string line);
 	void _ParseSection_SCENES(string line);

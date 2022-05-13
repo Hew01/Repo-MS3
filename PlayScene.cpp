@@ -250,7 +250,6 @@ void CPlayScene::Load()
 
 	f.close();
 
-	gameCamera = Camera::GetInstance();
 
 	DebugOut(L"[INFO] Done loading scene  %s\n", sceneFilePath);
 }

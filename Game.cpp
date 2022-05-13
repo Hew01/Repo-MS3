@@ -18,6 +18,8 @@ CGame* CGame::__instance = NULL;
 */
 void CGame::Init(HWND hWnd, HINSTANCE hInstance)
 {
+	cam = CCamera::GetInstance();
+
 	this->hWnd = hWnd;
 	this->hInstance = hInstance;
 

@@ -5,9 +5,9 @@
 #include "GameObject.h"
 #include "Debug.h"
 #include "Marco.h"
-#include "Camera.h"
 #include "Map.h"
 #include "TiledMap.h"
+#include "Camera.h"
 
 
 
@@ -30,8 +30,8 @@ protected:
 	void _ParseSection_GRID(string line);
 
 	void LoadAssets(LPCWSTR assetFile);
-	Camera* gameCamera;// new
 	CMap* tiledMap;
+	CCamera* cam;
 
 
 public:
