@@ -88,6 +88,7 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Chowmein_Conga.cpp" />
+    <ClCompile Include="Enormous.cpp" />
     <ClCompile Include="Foreground.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="Locust.cpp" />
@@ -116,6 +117,7 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Chowmein_Conga.h" />
+    <ClInclude Include="Enormous.h" />
     <ClInclude Include="Foreground.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="Locust.h" />

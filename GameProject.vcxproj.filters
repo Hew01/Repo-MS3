@@ -93,6 +93,9 @@
     <ClCompile Include="Foreground.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Enormous.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -179,8 +182,8 @@
     <ClInclude Include="Foreground.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <ClInclude Include="Enormous.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
