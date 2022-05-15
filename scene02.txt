@@ -3,6 +3,9 @@
 marco.txt
 map2.txt
 chowmein_conga.txt
+minisub98.txt
+enormous.txt
+
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type

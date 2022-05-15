@@ -24,3 +24,4 @@ height	240
 70	textures\Mission1_seaway.png
 2	textures\locust.png
 6   textures\enormous_moray.png
+7	textures\mini_sub_88.png
