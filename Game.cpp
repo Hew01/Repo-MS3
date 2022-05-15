@@ -175,6 +175,7 @@ void CGame::SetPointSamplerState()
 */
 void CGame::Draw(float x, float y, LPTEXTURE tex, RECT* rect, float alpha, int sprite_width, int sprite_height)
 {
+	D3DXVECTOR2 p(x - cam->GetCamPosX(), -y + cam->GetCamPosY());
 	if (tex == NULL) return;
 
 	int spriteWidth = sprite_width;
@@ -563,5 +564,15 @@ CGame* CGame::GetInstance()
 {
 	if (__instance == NULL) __instance = new CGame();
 	return __instance;
+}
+
+void CGame::SetCamPos(float x, float y)
+{
+	cam->SetCamPosition(x, y);
+}
+
+void CGame::SetBoundary(float w, float h)
+{
+	cam->SetBoundary(w, h);
 }
 

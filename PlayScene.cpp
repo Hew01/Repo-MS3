@@ -248,6 +248,7 @@ void CPlayScene::Load()
 		}
 	}
 
+
 	f.close();
 
 
@@ -276,6 +277,7 @@ void CPlayScene::Update(DWORD dt)
 	// Update camera to follow MARCO
 	float cx, cy;
 	player->GetPosition(cx, cy);
+	CGame::GetInstance()->SetCamPos(cx, cy);
 
 	CGame* game = CGame::GetInstance();
 	cx -= game->GetBackBufferWidth() / 2;
@@ -283,7 +285,6 @@ void CPlayScene::Update(DWORD dt)
 
 	if (cx < 0) cx = 0;
 
-	CGame::GetInstance()->SetCamPos(cx, 0.0f /*cy*/);
 
 	PurgeDeletedObjects();
 }
@@ -361,6 +362,11 @@ void CPlayScene::_ParseSection_MAP(string line)
 
 	tiledMap = new CTiledMap();
 	tiledMap->LoadMap(path.c_str());
+	int w, h;
+	tiledMap->GetMapWidth(w);
+	tiledMap->GetMapHeight(h);
+
+	CGame::GetInstance()->SetBoundary((float)w, (float)h);
 
 	vector<string> fg = tiledMap->getForeground();
 	vector<string> bg = tiledMap->getBackground();

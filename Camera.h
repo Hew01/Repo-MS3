@@ -17,7 +17,7 @@ class CCamera
 	CCamera();
 	CCamera(float start_x, float start_y);
 public:
-	void SetCamPos(float x, float y); //update camera follow player
+	void SetCamPosition(float x, float y); //update camera follow player
 	void SetBoundary(float w, float h);
 
 	float GetCamPosX() { return cam_x; }
