@@ -51,4 +51,3 @@ void CSprite::Draw(float x, float y, float n)
 
 	g->GetSpriteHandler()->DrawSpritesImmediate(&sprite, 1, 0, 0);
 }
-

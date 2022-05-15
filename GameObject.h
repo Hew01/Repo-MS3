@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 class GameObject
 {
 };
@@ -9,7 +9,6 @@ class GameObject
 #include <d3dx10.h>
 #include <vector>
 
-#include "Animation.h"
 #include "Animations.h"
 #include "Sprites.h"
 #include "Collision.h"
@@ -17,7 +16,7 @@ class GameObject
 using namespace std;
 
 #define ID_TEX_BBOX -100		// special texture to draw object bounding box
-#define BBOX_ALPHA 0.0f		// Bounding box transparency
+#define BBOX_ALPHA 0.3f		// Bounding box transparency
 
 class CGameObject
 {
@@ -33,8 +32,12 @@ protected:
 
 	int state;
 
-	bool isDeleted;
+	int id = 0;//mặc định
 
+	LPANIMATION_SET animation_set;
+	LPANIMATION_SET animation_item_set;
+
+	bool isDeleted;
 public:
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
@@ -45,7 +48,13 @@ public:
 	virtual void Delete() { isDeleted = true; }
 	bool IsDeleted() { return isDeleted; }
 
+	void SetAnimationSet(LPANIMATION_SET ani_set) { animation_set = ani_set; }
+	void SetAnimationItemSet(LPANIMATION_SET ani_set) { animation_item_set = ani_set; }
+
 	void RenderBoundingBox();
+
+	int GetID() { return this->id; }
+	void SetID(int _id) { this->id = _id; }
 
 	CGameObject();
 	CGameObject(float x, float y) :CGameObject() { this->x = x; this->y = y; }

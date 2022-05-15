@@ -4,13 +4,14 @@ marco.txt
 cloud.txt
 map.txt
 chowmein_conga.txt
+locust.txt
 bullet.txt
 ohumein_conga.txt
 
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
-# type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas
+# type: 0 = Mario , 1 = Brick, 2 = CHOWMEIN_CONGA, 3 = LOCUST
 # See OBJECT_TYPE constants in AssetIDs.h
 
 #Platform
@@ -24,10 +25,14 @@ ohumein_conga.txt
 0	100	10
 
 #CHOWMEIN_CONGA
-2	400	10
-2	300	10
-2	250	10
-2	200	10
+#2	400	10
+#2	300	10
+#2	250	10
+#2	200	10
+
+# LOCUST
+#3	150	30
+
 
 #OHUMEIN_CONGA
 6	400	10

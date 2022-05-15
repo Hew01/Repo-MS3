@@ -1,10 +1,14 @@
 #include "Chowmein_Conga.h"
-
+#include "Debug.h"
+#include "Bullet.h"
+#include <stdlib.h> 
 Chowmein_Conga::Chowmein_Conga(float x, float y) :CGameObject(x, y)
 {
+	this->distance_moved = rand()%(MOVING_RANGE/2);
 	this->ax = 0;
 	this->ay = CHOWMEIN_CONGA_GRAVITY;
 	die_start = -1;
+	vx = CHOWMEIN_CONGA_WALKING_SPEED;
 	SetState(CHOWMEIN_CONGA_STATE_WALKING);
 }
 
@@ -24,8 +28,14 @@ void Chowmein_Conga::OnNoCollision(DWORD dt)
 
 void Chowmein_Conga::OnCollisionWith(LPCOLLISIONEVENT e)
 {
+	if (state == CHOWMEIN_CONGA_STATE_DIE) return;
 	if (!e->obj->IsBlocking()) return;
 	if (dynamic_cast<Chowmein_Conga*>(e->obj)) return;
+	if (dynamic_cast<Bullet*>(e->obj)) {
+		SetState(CHOWMEIN_CONGA_STATE_DIE);
+		return;
+	}
+
 
 	if (e->ny != 0)
 	{
@@ -33,7 +43,10 @@ void Chowmein_Conga::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 	else if (e->nx != 0)
 	{
-		vx = -vx;
+		if (e->nx > 0) dir=1;
+		else dir = 1-1;
+		if (state!=CHOWMEIN_CONGA_STATE_ATTACK && !just_attacked)
+			SetState(CHOWMEIN_CONGA_STATE_ATTACK);
 	}
 }
 
@@ -41,10 +54,18 @@ void Chowmein_Conga::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
-
+	distance_moved += vx * dt;
+	if (abs(distance_moved) > MOVING_RANGE)
+		vx = -vx, distance_moved = 0, just_attacked =false;
+	//DebugOut(L"distance = %f\n", distance_moved);
 	if ((state == CHOWMEIN_CONGA_STATE_DIE) && (GetTickCount64() - die_start > CHOWMEIN_CONGA_DIE_TIMEOUT))
 	{
 		isDeleted = true;
+		return;
+	}	
+	if ((state == CHOWMEIN_CONGA_STATE_ATTACK) && (GetTickCount64() - attack_start > CHOWMEIN_CONGA_ATTACK_TIMEOUT))
+	{
+		SetState(CHOWMEIN_CONGA_STATE_WALKING);
 		return;
 	}
 
@@ -59,6 +80,10 @@ void Chowmein_Conga::Render()
 	if (state == CHOWMEIN_CONGA_STATE_DIE)
 	{
 		aniId = ID_ANI_CHOWMEIN_CONGA_DIE;
+	}
+	else if (state == CHOWMEIN_CONGA_STATE_ATTACK)
+	{
+		aniId = ID_ANI_CHOWMEIN_CONGA_ATTACK;
 	}
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y, 1);
@@ -77,7 +102,12 @@ void Chowmein_Conga::SetState(int state)
 		ay = 0;
 		break;
 	case CHOWMEIN_CONGA_STATE_WALKING:
-		vx = -CHOWMEIN_CONGA_WALKING_SPEED;
+		vx = CHOWMEIN_CONGA_WALKING_SPEED*dir;
 		break;
+	case CHOWMEIN_CONGA_STATE_ATTACK:
+		vx = 0;
+		distance_moved = 0;
+		just_attacked = true;
+		attack_start = GetTickCount64();
 	}
 }

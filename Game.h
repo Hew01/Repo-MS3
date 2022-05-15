@@ -49,6 +49,9 @@ class CGame
 	float cam_x = 0.0f;
 	float cam_y = 0.0f;
 
+	int screen_width;
+	int screen_height;
+
 	HINSTANCE hInstance;
 
 	ID3D10SamplerState* pPointSamplerState;
@@ -106,6 +109,11 @@ public:
 
 	void SetCamPos(float x, float y) { cam_x = x; cam_y = y; }
 	void GetCamPos(float& x, float& y) { x = cam_x; y = cam_y; }
+
+	int GetScreenWidth() { return screen_width; }
+	int GetScreenHeight() { return screen_height; }
+
+	int GetCurrentScenceID() { return current_scene; }
 
 	LPSCENE GetCurrentScene() { return scenes[current_scene]; }
 	void Load(LPCWSTR gameFile);
