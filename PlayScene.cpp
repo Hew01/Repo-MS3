@@ -126,7 +126,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 	case OBJECT_TYPE_CHOWMEIN_CONGA: obj = new Chowmein_Conga(x, y); break;
 	case OBJECT_TYPE_LOCUST: obj = new CLocust(player, x, y); break;
-	case OBJECT_TYPE_OHUMEIN_CONGA: obj = new COhumein_Conga(player, x, y); break;
+	case OBJECT_TYPE_OHUMEIN_CONGA: obj = new COhumein_Conga(x, y); break;
 	//case OBJECT_TYPE_BRICK: obj = new CBrick(x, y); break;
 	//case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
 

@@ -1,26 +1,14 @@
 #include "Ohumein_Conga.h"
-#include "Marco.h"
-#include "Game.h"
-
-COhumein_Conga::COhumein_Conga(CGameObject* m, float x, float y) :CGameObject(x, y)
+#include "Debug.h"
+#include "Bullet.h"
+#include <stdlib.h> 
+COhumein_Conga::COhumein_Conga(float x, float y) :CGameObject(x, y)
 {
-	player = m;
+	this->distance_moved = rand() % (MOVING_RANGE / 2);
 	this->ax = 0;
 	this->ay = OHUMEIN_CONGA_GRAVITY;
-	this->isDisplay = true;
-	this->isEnable = true;
-	float posX = 0;
-	float posY = 0;
-	player->GetPosition(posX, posY);
-	if (posX < SCREEN_WIDTH / 2) {
-		this->minX = 0;
-		this->maxX = SCREEN_WIDTH;
-	}
-	else {
-		this->minX = posX - SCREEN_WIDTH / 2;
-		this->maxX = posX + SCREEN_WIDTH / 2;
-	}
 	die_start = -1;
+	vx = OHUMEIN_CONGA_WALKING_SPEED;
 	SetState(OHUMEIN_CONGA_STATE_WALKING);
 }
 
@@ -40,8 +28,14 @@ void COhumein_Conga::OnNoCollision(DWORD dt)
 
 void COhumein_Conga::OnCollisionWith(LPCOLLISIONEVENT e)
 {
+	if (state == OHUMEIN_CONGA_STATE_DIE) return;
 	if (!e->obj->IsBlocking()) return;
 	if (dynamic_cast<COhumein_Conga*>(e->obj)) return;
+	if (dynamic_cast<Bullet*>(e->obj)) {
+		SetState(OHUMEIN_CONGA_STATE_DIE);
+		return;
+	}
+
 
 	if (e->ny != 0)
 	{
@@ -49,7 +43,10 @@ void COhumein_Conga::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 	else if (e->nx != 0)
 	{
-		vx = -vx;
+		if (e->nx > 0) dir = 1;
+		else dir = 1 - 1;
+		if (state != OHUMEIN_CONGA_STATE_ATTACK && !just_attacked)
+			SetState(OHUMEIN_CONGA_STATE_ATTACK);
 	}
 }
 
@@ -57,16 +54,18 @@ void COhumein_Conga::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
-	float posX = 0;
-	float posY = 0;
-	player->GetPosition(posX, posY);
-
-	if ((state == OHUMEIN_CONGA_STATE_WALKING) && (x > maxX || x < minX)) {
-		vx = -vx;
-	}
+	distance_moved += vx * dt;
+	if (abs(distance_moved) > MOVING_RANGE)
+		vx = -vx, distance_moved = 0, just_attacked = false;
+	//DebugOut(L"distance = %f\n", distance_moved);
 	if ((state == OHUMEIN_CONGA_STATE_DIE) && (GetTickCount64() - die_start > OHUMEIN_CONGA_DIE_TIMEOUT))
 	{
 		isDeleted = true;
+		return;
+	}
+	if ((state == OHUMEIN_CONGA_STATE_ATTACK) && (GetTickCount64() - attack_start > OHUMEIN_CONGA_ATTACK_TIMEOUT))
+	{
+		SetState(OHUMEIN_CONGA_STATE_WALKING);
 		return;
 	}
 
@@ -77,22 +76,14 @@ void COhumein_Conga::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void COhumein_Conga::Render()
 {
-	CAnimations* animations = CAnimations::GetInstance();
 	int aniId = ID_ANI_OHUMEIN_CONGA_WALKING;
-	switch (state)
+	if (state == OHUMEIN_CONGA_STATE_DIE)
 	{
-	case OHUMEIN_CONGA_STATE_DIE:
 		aniId = ID_ANI_OHUMEIN_CONGA_DIE;
-		break;
-	case OHUMEIN_CONGA_STATE_ATTACK_NEAR:
-		aniId = ID_ANI_OHUMEIN_CONGA_ATTACK_NEAR;
-		break;
-	case OHUMEIN_CONGA_STATE_ATTACK_FAR:
-		aniId = ID_ANI_OHUMEIN_CONGA_ATTACK_FAR;
-		break;
-	case OHUMEIN_CONGA_STATE_TURNING:
-		aniId = ID_ANI_OHUMEIN_CONGA_TURNING;
-		break;
+	}
+	else if (state == OHUMEIN_CONGA_STATE_ATTACK)
+	{
+		aniId = ID_ANI_OHUMEIN_CONGA_ATTACK;
 	}
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y, 1);
@@ -109,15 +100,14 @@ void COhumein_Conga::SetState(int state)
 		vx = 0;
 		vy = 0;
 		ay = 0;
-		isDisplay = false;
-		isEnable = false;
 		break;
 	case OHUMEIN_CONGA_STATE_WALKING:
-		vx = -OHUMEIN_CONGA_WALKING_SPEED;
+		vx = OHUMEIN_CONGA_WALKING_SPEED * dir;
 		break;
-	case OHUMEIN_CONGA_STATE_ATTACK_FAR:
-	case OHUMEIN_CONGA_STATE_ATTACK_NEAR:
-	case OHUMEIN_CONGA_STATE_TURNING:
-		break;
+	case OHUMEIN_CONGA_STATE_ATTACK:
+		vx = 0;
+		distance_moved = 0;
+		just_attacked = true;
+		attack_start = GetTickCount64();
 	}
 }

@@ -3,6 +3,7 @@
 
 #include "Marco.h"
 #include "Chowmein_Conga.h"
+#include "Ohumein_Conga.h"
 #include "Game.h"
 #include "Portal.h"
 #include "Bullet.h"
@@ -53,6 +54,8 @@ void CMARCO::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithChowmeinConga(e);
 	else if (dynamic_cast<CLocust*>(e->obj))
 		OnCollisionWithLocust(e);
+	else if (dynamic_cast<COhumein_Conga*>(e->obj))
+		OnCollisionWithOhumeinConga(e);
 	/*else if (dynamic_cast<Portal*>(e->obj))
 		OnCollisionWithPortal(e);*/
 	DebugOut(L"x = %f\n", x);
@@ -81,6 +84,27 @@ void CMARCO::OnCollisionWithChowmeinConga(LPCOLLISIONEVENT e)
 	}
 }
 
+void CMARCO::OnCollisionWithOhumeinConga(LPCOLLISIONEVENT e)
+{
+	COhumein_Conga* ohumein = dynamic_cast<COhumein_Conga*>(e->obj);
+
+	// jump on top >> kill Goomba and deflect a bit 
+	if (e->ny < 0)
+	{
+		if (ohumein->GetState() != OHUMEIN_CONGA_STATE_DIE)
+		{
+			ohumein->SetState(OHUMEIN_CONGA_STATE_DIE);
+			vy = -MARCO_JUMP_DEFLECT_SPEED;
+		}
+	}
+	else // hit by Goomba
+	{
+		/*if (killing)
+		{
+				chowmein->SetState(CHOWMEIN_CONGA_STATE_DIE);
+		}*/
+	}
+}
 void CMARCO::OnCollisionWithLocust(LPCOLLISIONEVENT e) {
 	CLocust* locust = (CLocust*)e->obj;
 	if (locust->GetState() == LOCUST_STATE_ATTACKING) {
