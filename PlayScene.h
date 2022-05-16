@@ -8,7 +8,7 @@
 #include "Camera.h"
 #include "Map.h"
 #include "TiledMap.h"
-
+#include "BMap.h"
 
 
 class CPlayScene : public CScene
@@ -18,7 +18,7 @@ protected:
 	LPGAMEOBJECT player;
 	CBackground* background;
 	CForeground* foreground;
-
+	BMap* map = NULL;
 	vector<LPGAMEOBJECT> objects;
 
 	void _ParseSection_SPRITES(string line);

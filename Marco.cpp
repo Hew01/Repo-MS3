@@ -56,8 +56,8 @@ void CMARCO::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithLocust(e);
 	else if (dynamic_cast<COhumein_Conga*>(e->obj))
 		OnCollisionWithOhumeinConga(e);
-	/*else if (dynamic_cast<Portal*>(e->obj))
-		OnCollisionWithPortal(e);*/
+	else if (dynamic_cast<Portal*>(e->obj))
+		OnCollisionWithPortal(e);
 	DebugOut(L"x = %f\n", x);
 	DebugOut(L"y = %f\n", y);
 }
@@ -212,7 +212,7 @@ void CMARCO::Render()
 		animations->Get(aniId)->Render(x + x_shift, y);
 	}
 
-	RenderBoundingBox();
+	//RenderBoundingBox();
 
 	//DebugOutTitle(L"Coins: %d", coin);
 }

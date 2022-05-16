@@ -87,7 +87,7 @@ void COhumein_Conga::Render()
 	}
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y, 1);
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void COhumein_Conga::SetState(int state)

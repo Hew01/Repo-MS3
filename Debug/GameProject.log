@@ -1,4 +1,4 @@
-﻿  AnimationFrame.cpp
+﻿  Marco.cpp
 C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(12,1): warning C4005: 'DXGI_STATUS_OCCLUDED': macro redefinition
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\winerror.h(56388): message : see previous definition of 'DXGI_STATUS_OCCLUDED'
 C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(13,1): warning C4005: 'DXGI_STATUS_CLIPPED': macro redefinition
@@ -47,7 +47,8 @@ C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\d3d10.h(608,1):
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\winerror.h(56841): message : see previous definition of 'D3D10_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS'
 C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\d3d10.h(609,1): warning C4005: 'D3D10_ERROR_FILE_NOT_FOUND': macro redefinition
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\winerror.h(56850): message : see previous definition of 'D3D10_ERROR_FILE_NOT_FOUND'
-  PlayScene.cpp
+C:\Users\LAP15090\Desktop\Repo-MS3\Marco.cpp(321,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Ohumein_Conga.cpp
 C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(12,1): warning C4005: 'DXGI_STATUS_OCCLUDED': macro redefinition
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\winerror.h(56388): message : see previous definition of 'DXGI_STATUS_OCCLUDED'
 C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(13,1): warning C4005: 'DXGI_STATUS_CLIPPED': macro redefinition
@@ -96,16 +97,6 @@ C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\d3d10.h(608,1):
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\winerror.h(56841): message : see previous definition of 'D3D10_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS'
 C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\d3d10.h(609,1): warning C4005: 'D3D10_ERROR_FILE_NOT_FOUND': macro redefinition
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\winerror.h(56850): message : see previous definition of 'D3D10_ERROR_FILE_NOT_FOUND'
-C:\Users\nhokb\OneDrive\Desktop\Git Project\GameGit\Repo-MS3\PlayScene.cpp(88,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\nhokb\OneDrive\Desktop\Git Project\GameGit\Repo-MS3\PlayScene.cpp(281,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\nhokb\OneDrive\Desktop\Git Project\GameGit\Repo-MS3\PlayScene.cpp(306,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\nhokb\OneDrive\Desktop\Git Project\GameGit\Repo-MS3\PlayScene.cpp(356,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\nhokb\OneDrive\Desktop\Git Project\GameGit\Repo-MS3\PlayScene.cpp(357,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\nhokb\OneDrive\Desktop\Git Project\GameGit\Repo-MS3\PlayScene.cpp(365,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\nhokb\OneDrive\Desktop\Git Project\GameGit\Repo-MS3\PlayScene.cpp(366,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\nhokb\OneDrive\Desktop\Git Project\GameGit\Repo-MS3\PlayScene.cpp(412,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\nhokb\OneDrive\Desktop\Git Project\GameGit\Repo-MS3\PlayScene.cpp(415,22): warning C4018: '<': signed/unsigned mismatch
-  Utils.cpp
+C:\Users\LAP15090\Desktop\Repo-MS3\Ohumein_Conga.cpp(7,32): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   Generating Code...
-  LINK : C:\Users\nhokb\OneDrive\Desktop\Git Project\GameGit\Repo-MS3\Debug\GameProject.exe not found or not built by the last incremental link; performing full link
-  GameProject.vcxproj -> C:\Users\nhokb\OneDrive\Desktop\Git Project\GameGit\Repo-MS3\Debug\GameProject.exe
+  GameProject.vcxproj -> C:\Users\LAP15090\Desktop\Repo-MS3\Debug\GameProject.exe

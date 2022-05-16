@@ -199,7 +199,8 @@ void CPlayScene::LoadAssets(LPCWSTR assetFile)
 		case ASSETS_SECTION_ANIMATIONS: _ParseSection_ANIMATIONS(line); break;
 		}
 	}
-
+	map = new BMap();
+	map->LoadBMapfromTMX("textures\\map.tmx", "textures\\");
 	f.close();
 
 	DebugOut(L"[INFO] Done loading assets from %s\n", assetFile);
@@ -278,6 +279,8 @@ void CPlayScene::Update(DWORD dt)
 
 void CPlayScene::Render()
 {
+	map->Render();
+
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();
 }
@@ -373,7 +376,7 @@ void CPlayScene::_ParseSection_MAP(string line)
 
 
 
-	CTiledMapSets::GetInstance()->Add(id, tiledMap);
+	//CTiledMapSets::GetInstance()->Add(id, tiledMap);
 
 }
 

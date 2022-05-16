@@ -15,13 +15,13 @@
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{4b91c509-82ff-4ebf-a15f-ec7a5ee73367}</ProjectGuid>
     <RootNamespace>GameProject</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -85,11 +85,13 @@
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="AssetIDs.cpp" />
     <ClCompile Include="Background.cpp" />
+    <ClCompile Include="BMap.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Chowmein_Conga.cpp" />
     <ClCompile Include="Foreground.cpp" />
     <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="Layer.cpp" />
     <ClCompile Include="Locust.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Debug.cpp" />
@@ -107,6 +109,11 @@
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="TiledMap.cpp" />
+    <ClCompile Include="TileSet.cpp" />
+    <ClCompile Include="tinyXML\tinyxml\tinystr.cpp" />
+    <ClCompile Include="tinyXML\tinyxml\tinyxml.cpp" />
+    <ClCompile Include="tinyXML\tinyxml\tinyxmlerror.cpp" />
+    <ClCompile Include="tinyXML\tinyxml\tinyxmlparser.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -114,11 +121,13 @@
     <ClInclude Include="Animations.h" />
     <ClInclude Include="AssetIDs.h" />
     <ClInclude Include="Background.h" />
+    <ClInclude Include="BMap.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Chowmein_Conga.h" />
     <ClInclude Include="Foreground.h" />
     <ClInclude Include="Grid.h" />
+    <ClInclude Include="Layer.h" />
     <ClInclude Include="Locust.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Debug.h" />
@@ -138,6 +147,9 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="TiledMap.h" />
+    <ClInclude Include="TileSet.h" />
+    <ClInclude Include="tinyXML\tinyxml\tinystr.h" />
+    <ClInclude Include="tinyXML\tinyxml\tinyxml.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
